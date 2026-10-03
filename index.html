@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script>
+  (function() {
+    var GA_ID = 'G-5L24MMHT33';
+    var isLocalDev = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+    if (isLocalDev) return;
+    var gaQ = new URLSearchParams(location.search); if (gaQ.get('obs') === '1' || gaQ.get('no_ga') === '1') return;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+    document.addEventListener('click', function(e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href*="booth.pm"]') : null;
+      if (!a) return;
+      gtag('event', 'booth_click', { link_url: a.href, link_id: a.id || '', link_text: (a.textContent || '').trim().slice(0, 40) });
+    });
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="LINEスタンプのメイン画像(240&#215;240)・タブ画像(96&#215;74)・スタンプ画像(370&#215;320以内・偶数)を無料で作成できる非公式のリサイズツール。AI画像やイラストを1枚入れるだけで、透明な余白の自動トリミング・余白10px・72dpiのPNGに変換。白・黒・透明背景で白フチも確認でき、画像は送信されません。登録不要。">
+<link rel="canonical" href="https://uuhai0625.github.io/line-stamp-resizer/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="LINEスタンプ リサイズツール(メイン240&#215;240・タブ96&#215;74・スタンプ370&#215;320を作成・非公式・無料)">
+<meta property="og:description" content="LINEスタンプのメイン画像(240&#215;240)・タブ画像(96&#215;74)・スタンプ画像(370&#215;320以内・偶数)を無料で作成できる非公式のリサイズツール。AI画像やイラストを1枚入れるだけで、透明な余白の自動トリミング・余白10px・72dpiのPNGに変換。白・黒・透明背景で白フチも確認でき、画像は送信されません。登録不要。">
+<meta property="og:url" content="https://uuhai0625.github.io/line-stamp-resizer/">
+<title>LINEスタンプ リサイズツール(メイン240×240・タブ96×74・スタンプ370×320を作成・非公式・無料)</title>
+<style>
+  :root {
+    --bg: #f3f6f6;
+    --panel: #ffffff;
+    --border: #d9e2e1;
+    --field-border: #74827f;
+    --text: #232a29;
+    --muted: #55625f;
+    --accent: #2f7d6d;
+    --accent-dark: #225c50;
+    --soft: #e8f3f0;
+    --warn-bg: #fff4e0;
+    --warn-text: #7a4b00;
+    --ng: #b3261e;
+    --ok: #1f6b3a;
+    --locked: #a9b4b2;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  header { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff; padding: 24px 20px 18px; text-align: center; }
+  header h1 { margin: 0 0 6px; font-size: 1.35rem; }
+  header p { margin: 0; font-size: .9rem; }
+  header .unofficial { display: inline-block; margin-top: 8px; font-size: .75rem; background: rgba(255,255,255,.18); border-radius: 999px; padding: 2px 10px; }
+  main { max-width: 960px; margin: 0 auto; padding: 22px 16px 50px; }
+  section.card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+  section.card h2 { margin: 0 0 6px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .desc { color: var(--muted); font-size: .84rem; margin: 0 0 12px; }
+  .fine { color: var(--muted); font-size: .8rem; margin: 8px 0 0; }
+  .badge { display: inline-block; font-size: .7rem; padding: 2px 8px; border-radius: 999px; background: #fff1cc; color: #7a5600; font-weight: bold; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .hidden { display: none !important; }
+  label.field { display: block; margin-bottom: 12px; }
+  .lbl { font-size: .85rem; font-weight: bold; display: block; }
+  .hint { font-size: .78rem; color: var(--muted); font-weight: normal; display: block; margin-top: 2px; }
+  input[type=number], select { width: 100%; margin-top: 5px; padding: 8px 10px; min-height: 44px; border: 1px solid var(--field-border); border-radius: 8px; font-size: 1rem; font-family: inherit; background: #fff; color: var(--text); }
+  .row3 { display: flex; gap: 12px; }
+  .row3 > * { flex: 1; min-width: 0; }
+  label.check { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: .86rem; cursor: pointer; }
+  label.check input { width: 20px; height: 20px; margin: 0; flex-shrink: 0; }
+  .drop { border: 2px dashed var(--field-border); border-radius: 12px; padding: 22px 14px; text-align: center; background: #fafcfc; cursor: pointer; }
+  .drop.over { border-color: var(--accent); background: var(--soft); }
+  .drop:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+  .drop strong { display: block; font-size: .95rem; }
+  .drop span { font-size: .8rem; color: var(--muted); }
+  .seg { display: flex; gap: 8px; flex-wrap: wrap; }
+  .seg label { min-height: 44px; display: flex; align-items: center; gap: 6px; border: 1px solid var(--field-border); border-radius: 8px; padding: 6px 12px; font-size: .86rem; cursor: pointer; background: #fff; }
+  .seg label.on { border-color: var(--accent); background: var(--soft); font-weight: bold; }
+  .seg label:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+  fieldset.plain { border: none; padding: 0; margin: 0 0 12px; }
+  fieldset.plain legend { font-size: .85rem; font-weight: bold; padding: 0; margin-bottom: 5px; }
+  table.spec { border-collapse: collapse; font-size: .84rem; width: 100%; }
+  table.spec th, table.spec td { text-align: left; padding: 6px; border-bottom: 1px solid var(--border); }
+
+  .btn-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .btn { min-height: 44px; padding: 9px 16px; border-radius: 8px; font-size: .88rem; cursor: pointer; border: 1px solid var(--field-border); background: #fff; color: var(--text); font-family: inherit; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+  .status { font-size: .82rem; color: var(--muted); margin-top: 6px; min-height: 1.2em; }
+  .warn { background: var(--warn-bg); color: var(--warn-text); border-radius: 8px; padding: 8px 12px; font-size: .83rem; margin: 8px 0 0; }
+
+  .outs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .out { border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .out h3 { margin: 0 0 6px; font-size: .95rem; }
+  .preview { display: flex; align-items: center; justify-content: center; min-height: 140px; border-radius: 8px; padding: 8px; border: 1px solid var(--border); }
+  .preview canvas { max-width: 100%; height: auto; outline: 1px dashed rgba(127,127,127,.6); }
+  .bg-checker { background-color: #fff; background-image: linear-gradient(45deg, #d8d8d8 25%, transparent 25%), linear-gradient(-45deg, #d8d8d8 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #d8d8d8 75%), linear-gradient(-45deg, transparent 75%, #d8d8d8 75%); background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0; }
+  .bg-white { background: #ffffff; }
+  .bg-black { background: #111111; }
+  .bg-color { background: #3a7bd5; }
+  ul.checks { list-style: none; padding: 0; margin: 8px 0 0; font-size: .8rem; }
+  ul.checks li { margin: 2px 0; }
+  ul.checks li.ok { color: var(--ok); }
+  ul.checks li.ng { color: var(--ng); font-weight: bold; }
+  ul.checks li.info { color: var(--warn-text); }
+  .save-row { display: flex; gap: 6px; align-items: flex-end; margin-top: 8px; }
+  .save-row label { font-size: .76rem; color: var(--muted); font-weight: bold; width: 84px; flex-shrink: 0; }
+  .save-row input { margin-top: 2px; }
+  .save-row .btn { flex: 1; }
+
+  .locked-panel { border: 1px dashed var(--locked); border-radius: 10px; padding: 16px; text-align: center; color: var(--muted); background: #fafcfc; }
+  .locked-panel .feat-list { text-align: left; max-width: 580px; margin: 10px auto; font-size: .85rem; padding-left: 1.2em; }
+  .buy-btn { display: inline-block; margin-top: 8px; background: var(--accent-dark); color: #fff; font-weight: bold; padding: 11px 22px; border-radius: 999px; text-decoration: none; font-size: .9rem; }
+  
+  footer { max-width: 960px; margin: 0 auto; padding: 0 16px 40px; font-size: .8rem; color: var(--muted); }
+  footer a { color: var(--muted); }
+  @media (max-width: 600px) {
+    .row3 { flex-direction: column; gap: 0; }
+    section.card { padding: 16px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>LINEスタンプ リサイズツール</h1>
+  <p>AI画像やイラストを1枚入れるだけで、メイン画像(240×240)・タブ画像(96×74)・スタンプ画像(370×320以内)を作れます。登録不要・無料</p>
+  <span class="unofficial">LINEヤフー株式会社とは関係のない非公式ツールです</span>
+</header>
+
+<main>
+
+  <section class="card" id="spec">
+    <h2>LINEスタンプの画像サイズ(早見表)</h2>
+    <div style="overflow-x:auto;">
+    <table class="spec">
+      <thead><tr><th scope="col">画像</th><th scope="col">サイズ</th><th scope="col">個数・ファイル名</th></tr></thead>
+      <tbody>
+        <tr><td>メイン画像</td><td>240×240px</td><td>1個(main.png)</td></tr>
+        <tr><td>スタンプ画像</td><td>最大370×320px</td><td>8・16・24・32・40個のいずれか(01.png〜)</td></tr>
+        <tr><td>トークルームタブ画像</td><td>96×74px</td><td>1個(tab.png)</td></tr>
+        <tr><td>絵文字</td><td>180×180px(余白なし推奨)</td><td>8〜40個(001.png〜)+タブ画像</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="fine">共通: PNG・背景透過・縦横とも偶数・1個1MB以下・72dpi以上・RGB。スタンプ画像は余白10px程度が目安。ZIPはスタンプ60MB・絵文字20MBまで。規定は変わることがあるので、申請前にLINE Creators Marketの制作ガイドラインも確認してください。</p>
+  </section>
+
+  <section class="card">
+    <h2>① 画像を選ぶ</h2>
+    <p class="desc">背景を透過したPNGがおすすめです。MidjourneyやChatGPTなどで作った画像は背景が透過していないことが多いので、先に画像編集アプリの「背景を削除」機能などで背景を消してください(透過していない画像も変換はできますが、そのままではLINEに申請できません)。画像はこのブラウザの中だけで処理され、どこにも送信されません。</p>
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="画像を選ぶ(クリックまたはドラッグ&ドロップ)">
+      <strong>ここに画像をドラッグ&ドロップ</strong>
+      <span>またはクリックして選ぶ(PNG・JPEG・WebP)</span>
+    </div>
+    <input type="file" id="file1" accept="image/png,image/jpeg,image/webp" class="hidden">
+    <div class="status" id="st1" role="status"></div>
+  </section>
+
+  <section class="card">
+    <h2>② 設定</h2>
+    <div class="row3">
+      <label class="field">
+        <span class="lbl">余白(px)</span>
+        <input type="number" id="in-margin" min="0" max="40" step="2" value="10" inputmode="numeric">
+        <span class="hint">スタンプはLINEの目安が10px程度。メイン画像にも同じ余白を使います</span>
+      </label>
+      <label class="field">
+        <span class="lbl">タブ画像の余白(px)</span>
+        <input type="number" id="in-tabmargin" min="0" max="20" step="2" value="2" inputmode="numeric">
+        <span class="hint">本ツールのおすすめは少なめ。タブは小さいので顔のアップなどの画像が見やすいです</span>
+      </label>
+      <label class="field">
+        <span class="lbl">スタンプ画像のサイズ</span>
+        <select id="in-fit">
+          <option value="fit">絵に合わせる(370×320以内・偶数)</option>
+          <option value="full">370×320に固定(中央に配置)</option>
+        </select>
+      </label>
+    </div>
+    <label class="check"><input type="checkbox" id="opt-trim" checked> まわりの透明な部分を自動で切り取ってから配置する</label>
+    <fieldset class="plain" style="margin-top:6px;">
+      <legend>確認用の背景(白フチ・欠けのチェックに)</legend>
+      <div class="seg" id="bgSeg">
+        <label class="on"><input type="radio" name="bg" value="checker" checked> 透明(市松)</label>
+        <label><input type="radio" name="bg" value="white"> 白</label>
+        <label><input type="radio" name="bg" value="black"> 黒</label>
+        <label><input type="radio" name="bg" value="color"> 青</label>
+      </div>
+    </fieldset>
+  </section>
+
+  <section class="card" id="result-card" tabindex="-1">
+    <h2>③ できあがり</h2>
+    <div id="warns" aria-live="polite"></div>
+    <div class="outs" id="outs"><p class="desc" style="margin:0;">①で画像を選ぶと、ここにメイン・タブ・スタンプ画像が出ます。</p></div>
+    <p class="fine">保存したPNGは、72dpi・RGB・背景透過(元画像が透過している場合)で書き出されます。LINE Creators Marketの申請では、メイン1個・タブ1個・スタンプ(8・16・24・32・40個のいずれか)をZIPにまとめてアップロードします。</p>
+  </section>
+
+  <section class="card" id="pro-section">
+    <h2>40枚まとめて変換・申請用ZIPを作成 <span class="badge">買い切り版 ¥100</span></h2>
+    <div class="locked-panel">
+      <p>このページの機能は無料でそのまま使えます。買い切り版(ダウンロード購入)では、次の機能が増えます:</p>
+      <ul class="feat-list">
+        <li><strong>最大40枚を一括変換</strong>: AI画像やイラストをまとめてドロップするだけで、全部を370×320以内・偶数サイズ・余白つきに揃えます</li>
+        <li><strong>申請用ZIPをそのまま作成</strong>: main.png・tab.png・01.png〜40.png の名前で1つのZIPに(並べ替え・メイン/タブに使う画像の指定もできます)</li>
+        <li><strong>絵文字モード</strong>: 180×180の絵文字画像(001.png〜040.png)とタブ画像をまとめて作成</li>
+        <li>背景が透過していない画像・拡大しすぎてぼやけそうな画像・個数の間違いを一覧でお知らせ</li>
+      </ul>
+      <a class="buy-btn" href="https://uuhai0625.booth.pm/items/8932647" id="buyLink" target="_blank" rel="noopener">買い切り版を見る(BOOTH・新しいタブ)</a>
+    </div>
+  </section>
+
+  
+
+</main>
+
+<footer>
+  <p id="privacyNote">本ツールは完全にブラウザ内で動作し、画像はどこにも送信されません。</p>
+  <p>作った画像の申請前チェックには無料の<a href="https://uuhai0625.github.io/line-stamp-checker/" target="_blank" rel="noopener">LINEスタンプ 申請前チェッカー</a>もどうぞ。<a href="https://uuhai0625.booth.pm/" target="_blank" rel="noopener">他のツールも見る(BOOTHショップ)</a></p>
+  <p>LINE、LINEのロゴは、LINEヤフー株式会社の登録商標または商標です。本ツールはLINEヤフー株式会社とは関係のない、個人が制作した非公式ツールです。</p>
+  <p>不具合・ご要望は X <a href="https://x.com/uuhai0625" target="_blank" rel="noopener">@uuhai0625</a> まで。</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var EDITION = "free"; // "full" で買い切り完全版
+
+  function track(name, params) {
+    if (!window.dataLayer) return;
+    (function () { window.dataLayer.push(arguments); })("event", name, params || {});
+  }
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, attrs, text) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { if (k === "class") e.className = attrs[k]; else e.setAttribute(k, attrs[k]); });
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function later(fn) { setTimeout(fn, 30); } // 「処理中」の表示を先に描かせる
+
+  var SPEC = { main: [240, 240], tab: [96, 74], stamp: [370, 320], emoji: [180, 180], maxBytes: 1024 * 1024 };
+  var MAX_SRC_PX = 100000000, WORK_LONG = 1600; // 読み込んだ画像は長い辺1600pxまで縮めて持つ(出力は最大370px)
+
+  // ===== CRC32(PNGのチャンクとZIPで使う) =====
+  var CRC_TABLE = (function () { var t = new Uint32Array(256); for (var n = 0; n < 256; n++) { var c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+  function crc32(bytes, start, end) { var c = 0xFFFFFFFF; for (var i = start || 0, e = end == null ? bytes.length : end; i < e; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+
+  // PNGに72dpi(pHYs)を書き込む(すでにあれば何もしない)
+  function withDpi(bytes) {
+    if (bytes.length < 33 || bytes[12] !== 0x49 || bytes[13] !== 0x48) return bytes;
+    var p = 8;
+    while (p + 8 <= bytes.length) {
+      var len = ((bytes[p] << 24) | (bytes[p + 1] << 16) | (bytes[p + 2] << 8) | bytes[p + 3]) >>> 0;
+      var type = String.fromCharCode(bytes[p + 4], bytes[p + 5], bytes[p + 6], bytes[p + 7]);
+      if (type === "pHYs") return bytes;
+      if (type === "IDAT" || type === "IEND") break;
+      p += 12 + len;
+    }
+    var ihdrEnd = 8 + 4 + 4 + 13 + 4;
+    var chunk = new Uint8Array(4 + 4 + 9 + 4), dv = new DataView(chunk.buffer);
+    dv.setUint32(0, 9); chunk.set([0x70, 0x48, 0x59, 0x73], 4);
+    dv.setUint32(8, 2835); dv.setUint32(12, 2835); chunk[16] = 1;
+    dv.setUint32(17, crc32(chunk, 4, 17));
+    var out = new Uint8Array(bytes.length + chunk.length);
+    out.set(bytes.subarray(0, ihdrEnd), 0); out.set(chunk, ihdrEnd); out.set(bytes.subarray(ihdrEnd), ihdrEnd + chunk.length);
+    return out;
+  }
+  function canvasToPng(cv) {
+    return new Promise(function (res, rej) {
+      cv.toBlob(function (b) {
+        if (!b) { rej(new Error("toBlob")); return; }
+        b.arrayBuffer().then(function (buf) { res(withDpi(new Uint8Array(buf))); }, rej);
+      }, "image/png");
+    });
+  }
+
+  // ===== 画像の読み込み(長い辺1600pxまで縮めてから調べる) =====
+  function loadImage(file) {
+    return new Promise(function (res, rej) {
+      if (!/^image\/(png|jpeg|webp)$/.test(file.type)) { rej(new Error("type")); return; }
+      if (file.size > 30 * 1024 * 1024) { rej(new Error("big")); return; }
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        URL.revokeObjectURL(url);
+        var nw = img.naturalWidth, nh = img.naturalHeight;
+        if (!nw || !nh || nw * nh > MAX_SRC_PX) { rej(new Error("px")); return; }
+        var s = Math.min(1, WORK_LONG / Math.max(nw, nh));
+        var cv = el("canvas"); cv.width = Math.max(1, Math.round(nw * s)); cv.height = Math.max(1, Math.round(nh * s));
+        var ctx = cv.getContext("2d"); if (!ctx) { rej(new Error("ctx")); return; }
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(img, 0, 0, cv.width, cv.height);
+        var data;
+        try { data = ctx.getImageData(0, 0, cv.width, cv.height).data; } catch (e) { rej(e); return; }
+        var info = analyze(cv, data); info.origW = nw; info.origH = nh; info.shrink = s;
+        res(info);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); rej(new Error("decode")); };
+      img.src = url;
+    });
+  }
+  function loadError(e) {
+    var m = e && e.message;
+    return m === "type" ? "PNG・JPEG・WebPの画像を選んでください。" : m === "big" ? "ファイルが大きすぎます(30MBまで)。" : m === "px" ? "画像が大きすぎます。" : "画像を読み込めませんでした。";
+  }
+  // 透明な部分を除いた範囲と、透過の有無を調べる
+  function analyze(cv, d) {
+    var w = cv.width, h = cv.height, minX = w, minY = h, maxX = -1, maxY = -1, transparent = 0;
+    for (var y = 0; y < h; y++) {
+      for (var x = 0; x < w; x++) {
+        var a = d[(y * w + x) * 4 + 3];
+        if (a < 255) transparent++;
+        if (a > 8) { if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y; }
+      }
+    }
+    var empty = maxX < 0;
+    return { canvas: cv, w: w, h: h, empty: empty, opaque: transparent === 0, box: empty ? { x: 0, y: 0, w: w, h: h } : { x: minX, y: minY, w: maxX - minX + 1, h: maxY - minY + 1 } };
+  }
+
+  // 縮小はいったん半分ずつ縮めてから仕上げる(ギザギザ防止)
+  function scaledSource(src, sx, sy, sw, sh, tw, th) {
+    var cur = el("canvas"); cur.width = sw; cur.height = sh;
+    cur.getContext("2d").drawImage(src, sx, sy, sw, sh, 0, 0, sw, sh);
+    while (cur.width / 2 >= tw && cur.height / 2 >= th) {
+      var nx = el("canvas"); nx.width = Math.max(1, Math.round(cur.width / 2)); nx.height = Math.max(1, Math.round(cur.height / 2));
+      var c2 = nx.getContext("2d"); c2.imageSmoothingQuality = "high"; c2.drawImage(cur, 0, 0, nx.width, nx.height);
+      cur = nx;
+    }
+    return cur;
+  }
+  function even(n) { n = Math.ceil(n); return n % 2 ? n + 1 : n; }
+
+  // 枠(W×H)の中に余白mを取って収める。fit=true なら絵に合わせて小さめの偶数サイズにする
+  function makeImage(info, W, H, m, fit, trim) {
+    var b = trim ? info.box : { x: 0, y: 0, w: info.w, h: info.h };
+    var s = Math.min((W - 2 * m) / b.w, (H - 2 * m) / b.h);
+    if (!(s > 0)) s = Math.min(W / b.w, H / b.h);
+    var dw = Math.max(1, Math.round(b.w * s)), dh = Math.max(1, Math.round(b.h * s));
+    var cw = W, ch = H;
+    if (fit) { cw = Math.min(W, even(dw + 2 * m)); ch = Math.min(H, even(dh + 2 * m)); }
+    var cv = el("canvas"); cv.width = cw; cv.height = ch;
+    var ctx = cv.getContext("2d"); ctx.imageSmoothingQuality = "high";
+    var src = scaledSource(info.canvas, b.x, b.y, b.w, b.h, dw, dh);
+    ctx.drawImage(src, 0, 0, src.width, src.height, Math.round((cw - dw) / 2), Math.round((ch - dh) / 2), dw, dh);
+    return { canvas: cv, scale: s * info.shrink }; // 元画像に対する倍率
+  }
+
+  function num(id, def, min, max) {
+    var raw = $(id).value.trim(), v = Number(raw);
+    if (raw === "" || !isFinite(v)) return def;
+    return Math.max(min, Math.min(max, Math.round(v)));
+  }
+  function settings() {
+    return { margin: num("in-margin", 10, 0, 40), tabMargin: num("in-tabmargin", 2, 0, 20), fit: $("in-fit").value !== "full", trim: $("opt-trim").checked };
+  }
+
+  function checksFor(kind, cv, bytes, scale, info) {
+    var out = [], sp = SPEC[kind], w = cv.width, h = cv.height;
+    if (kind === "stamp") out.push(w <= sp[0] && h <= sp[1] ? ["ok", "サイズ " + w + "×" + h + "px(370×320以内)"] : ["ng", "サイズ " + w + "×" + h + "px(370×320を超えています)"]);
+    else out.push(w === sp[0] && h === sp[1] ? ["ok", "サイズ " + w + "×" + h + "px(規定どおり)"] : ["ng", "サイズ " + w + "×" + h + "px(規定は" + sp[0] + "×" + sp[1] + ")"]);
+    out.push(w % 2 === 0 && h % 2 === 0 ? ["ok", "縦横とも偶数"] : ["ng", "縦か横が奇数です"]);
+    out.push(bytes.length <= SPEC.maxBytes ? ["ok", "ファイルサイズ " + Math.max(1, Math.round(bytes.length / 1024)) + "KB(1MB以下)"] : ["ng", "ファイルサイズが1MBを超えています"]);
+    if (info.opaque) out.push(["ng", "背景が透過していません(LINEの申請には背景の透過が必要です)"]);
+    if (scale > 1.5) out.push(["info", "元の画像が小さいため" + scale.toFixed(1) + "倍に拡大しています。ぼやけることがあります"]);
+    return out;
+  }
+
+  // ===== 無料版: 1枚から3種類を作る =====
+  var current = null, BG = "checker", loadSeq = 0, renderSeq = 0;
+  function previewBox(cv, label, zoom) {
+    var p = el("div", { class: "preview bg-" + BG });
+    var show = el("canvas", { role: "img", "aria-label": label }); show.width = cv.width; show.height = cv.height; show.getContext("2d").drawImage(cv, 0, 0);
+    show.style.width = Math.min(cv.width * (zoom || 1), 260) + "px";
+    p.appendChild(show);
+    return p;
+  }
+  function download(blob, name) {
+    var url = URL.createObjectURL(blob), a = el("a"); a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  }
+  function renderSingle(scroll) {
+    if (!current) return;
+    var seq = ++renderSeq, st = settings();
+    var defs = [
+      { kind: "main", title: "メイン画像 240×240", file: "main.png", W: 240, H: 240, m: st.margin, fit: false },
+      { kind: "tab", title: "タブ画像 96×74(2倍で表示)", file: "tab.png", W: 96, H: 74, m: st.tabMargin, fit: false, zoom: 2 },
+      { kind: "stamp", title: "スタンプ画像(370×320以内)", file: "", W: 370, H: 320, m: st.margin, fit: st.fit }
+    ];
+    var made = defs.map(function (d) { var r = makeImage(current, d.W, d.H, d.m, d.fit, st.trim); r.def = d; return r; });
+    Promise.all(made.map(function (r) { return canvasToPng(r.canvas); })).then(function (pngs) {
+      if (seq !== renderSeq) return;
+      var box = $("outs"); box.innerHTML = "";
+      made.forEach(function (r, i) {
+        var d = r.def, bytes = pngs[i];
+        var card = el("div", { class: "out" });
+        card.appendChild(el("h3", null, d.title));
+        card.appendChild(previewBox(r.canvas, d.title + "のプレビュー " + r.canvas.width + "×" + r.canvas.height + "px", d.zoom));
+        var ul = el("ul", { class: "checks" });
+        checksFor(d.kind, r.canvas, bytes, r.scale, current).forEach(function (c) { ul.appendChild(el("li", { class: c[0] }, (c[0] === "ok" ? "✓ " : c[0] === "ng" ? "✕ " : "! ") + c[1])); });
+        card.appendChild(ul);
+        if (d.kind === "stamp") {
+          var row = el("div", { class: "save-row" });
+          var lb = el("label", null, "スタンプ番号"); var no = el("input", { type: "number", min: "1", max: "40", value: "1", inputmode: "numeric" }); lb.appendChild(no);
+          var b2 = el("button", { type: "button", class: "btn primary" }, "01.png を保存");
+          no.addEventListener("input", function () { b2.textContent = stampName() + " を保存"; });
+          function stampName() { var n = Math.max(1, Math.min(40, Math.round(Number(no.value) || 1))); return ("0" + n).slice(-2) + ".png"; }
+          b2.addEventListener("click", function () { download(new Blob([bytes], { type: "image/png" }), stampName()); track("png_download", { kind: "stamp" }); });
+          row.appendChild(lb); row.appendChild(b2); card.appendChild(row);
+        } else {
+          var btn = el("button", { type: "button", class: "btn primary", style: "margin-top:8px;width:100%;" }, d.file + " を保存");
+          btn.addEventListener("click", function () { download(new Blob([bytes], { type: "image/png" }), d.file); track("png_download", { kind: d.kind }); });
+          card.appendChild(btn);
+        }
+        box.appendChild(card);
+      });
+      var w = $("warns"); w.innerHTML = "";
+      if (current.empty) w.appendChild(el("p", { class: "warn" }, "画像がすべて透明のようです。別の画像を選んでください。"));
+      else if (current.opaque) w.appendChild(el("p", { class: "warn" }, "背景が透過していない画像です。このままではLINEに申請できないので、画像編集アプリの「背景を削除」機能などで背景を消したPNGを使ってください" + (st.trim ? "(透明な部分がないので、まわりの切り取りもしていません)。" : "。")));
+      if (scroll && window.innerWidth < 700) $("result-card").scrollIntoView({ behavior: "smooth", block: "start" });
+    }, function () { $("st1").textContent = "画像を書き出せませんでした。"; });
+  }
+  function takeFile(file) {
+    var st = $("st1"), seq = ++loadSeq;
+    if (!file) return;
+    st.textContent = "読み込み中…";
+    loadImage(file).then(function (info) {
+      if (seq !== loadSeq) return;
+      current = info;
+      st.textContent = "「" + file.name + "」(" + info.origW + "×" + info.origH + "px)を読み込みました。③にできあがりが出ます。";
+      renderSingle(true); track("image_load", {});
+    }, function (e) { if (seq === loadSeq) st.textContent = loadError(e); });
+  }
+  function bindDrop(dropId, inputId, onFiles) {
+    var d = $(dropId), inp = $(inputId);
+    d.addEventListener("click", function () { inp.click(); });
+    d.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); inp.click(); } });
+    d.addEventListener("dragover", function (e) { e.preventDefault(); d.classList.add("over"); });
+    d.addEventListener("dragleave", function () { d.classList.remove("over"); });
+    d.addEventListener("drop", function (e) { e.preventDefault(); d.classList.remove("over"); onFiles([].slice.call(e.dataTransfer.files || [])); });
+    inp.addEventListener("change", function () { onFiles([].slice.call(inp.files || [])); inp.value = ""; });
+  }
+  bindDrop("drop", "file1", function (files) { takeFile(files[0]); });
+
+  var refreshBatch = function () {};
+  var rTimer = null;
+  function onSetting() { clearTimeout(rTimer); rTimer = setTimeout(function () { renderSingle(false); refreshBatch(true); }, 150); }
+  ["in-margin", "in-tabmargin"].forEach(function (id) {
+    $(id).addEventListener("input", onSetting);
+    $(id).addEventListener("change", function (e) { var s = settings(); e.target.value = id === "in-margin" ? s.margin : s.tabMargin; });
+  });
+  $("in-fit").addEventListener("change", onSetting);
+  $("opt-trim").addEventListener("change", onSetting);
+  document.querySelectorAll('input[name="bg"]').forEach(function (r) {
+    r.addEventListener("change", function () {
+      BG = r.value;
+      document.querySelectorAll("#bgSeg label").forEach(function (l) { l.classList.toggle("on", l.contains(r)); });
+      document.querySelectorAll(".preview, .bitem .thumb").forEach(function (p) { p.className = p.className.replace(/\bbg-\w+/, "bg-" + BG); });
+    });
+  });
+
+  
+
+  if (EDITION !== "full") {
+    $("privacyNote").innerHTML = '画像はどこにも送信されません(すべてこのブラウザの中で処理します)。このページでは利用状況の把握のためにアクセス解析(Google Analytics)を使っています。<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener">Googleによるデータの使用について</a>';
+  }
+})();
+</script>
+</body>
+</html>
